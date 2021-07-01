@@ -1,12 +1,22 @@
 #! /bin/sh
 
-# NOTE: Since this configuration is just run as a shell script,
-# some things may behave weirdly due to syntax. Notably,
-# the '#' sign may be treated as a comment, requiring escaping
-# it with a backslash.
+# NOTE: Since this configuration is just run as a shell script, some things may
+# behave weirdly due to syntax. Notably, color values for bspc uses the '#'
+# sign, which may be treated as a comment by the shell, requiring escaping it
+# with a backslash.
 
+# Start X key daemon; all keybindings go here.
 pgrep -x sxhkd > /dev/null || sxhkd &
+
+# Start compositor (shadows, transparency etc.).
 pgrep -x picom > /dev/null || picom &
+
+# Set the background image with feh.
+if [ -f "$HOME/.fehbg" ]; then
+	sh $HOME/.fehbg
+else
+	echo '.fehbg not found.'
+fi
 
 bspc monitor -d I II III IV V VI VII VIII IX X
 
