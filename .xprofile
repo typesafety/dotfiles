@@ -1,0 +1,8 @@
+# Start the vmware user (shared clipboard, drag-and-drop).
+vmware-user &
+
+# Set keyboard repeat rates.
+xset r rate 250 45 &
+
+
+
