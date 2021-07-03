@@ -1,11 +1,3 @@
-# Add .dotfiles scripts directory to PATH
-export PATH=$HOME/.dotfiles/scripts:$PATH
-
-# Make rm/cp/mv a bit safer
-alias rm=rm -I
-alias cp=cp -I
-alias mv=mv -I
-
 #
 # zsh/oh-my-zsh settings
 #
@@ -79,4 +71,25 @@ plugins=(
 )
 
 source $ZSH/oh-my-zsh.sh
+
+#
+# Other stuff, needs to come last to not get overwritten
+#
+# Aliases can act weird if the command is not quoted, write
+# 	ll="ls -Ahl"
+# rather than
+# 	ll=ls -Ahl
+#
+
+# Add .dotfiles scripts directory to PATH
+export PATH=$HOME/.dotfiles/scripts:$PATH
+
+# Make rm/cp/mv a bit safer
+alias rm="rm -I"
+alias cp="cp -i"
+alias mv="mv -i"
+
+# ls aliases
+alias ll="ls -Ahl"
+alias l="ls -Ghl"
 
