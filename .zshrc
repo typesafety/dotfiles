@@ -81,8 +81,9 @@ source $ZSH/oh-my-zsh.sh
 # 	ll=ls -Ahl
 #
 
-# Add .dotfiles scripts directory to PATH
+# Generic environment variables
 export PATH=$HOME/.dotfiles/scripts:$PATH
+export EDITOR=/usr/bin/nvim
 
 # Make rm/cp/mv a bit safer
 alias rm="rm -I"
