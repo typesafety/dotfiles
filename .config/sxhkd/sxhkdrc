@@ -10,9 +10,9 @@ ctrl + alt + Return
 ctrl + alt + p
 	rofi -show run
 
-# Switch to a window
+# Switch to a window, or launch program if no appropriate window found
 alt + p
-	rofi -show window
+	rofi -show combi
 
 # make sxhkd reload its configuration files:
 super + Escape
