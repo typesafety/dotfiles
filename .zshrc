@@ -94,3 +94,6 @@ alias mv="mv -i"
 alias ll="ls -Ahl"
 alias l="ls -Ghl"
 
+# Move quickly to .dotfiles
+alias cdots="cd $HOME/.dotfiles"
+
