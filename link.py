@@ -30,7 +30,10 @@ def link(pairs: list[tuple[Path, Path]], is_dry: bool):
     if is_dry:
         print('Running DRY')
 
-    for sym, source in pairs:
+    # Only bother with paths that aren't already symlinked.
+    new_pairs = filter(lambda p: not p[0].exists(), pairs)
+
+    for sym, source in new_pairs:
         print(f'Linking: {sym} -> {source}')
         if not is_dry:
             sym.symlink_to(source)
