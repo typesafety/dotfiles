@@ -41,6 +41,12 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 
 #
+# Environment variables
+#
+
+export PATH="$PATH:$HOME/.local/bin"
+
+#
 # Other stuff, needs to come last to not get overwritten
 #
 # Aliases can act weird if the command is not quoted, write
