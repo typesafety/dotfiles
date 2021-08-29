@@ -18,6 +18,19 @@ else
 	echo '.fehbg not found.'
 fi
 
+# Start cmst (ConnMan frontend)
+pgrep -x cmst > /dev/null || cmst &
+
+# Start notification daemon
+pgrep -x xfce4-notifyd > /dev/null || /usr/lib/xfce4/notifyd/xfce4-notifyd &
+
+# Fix X shaped cursor
+xsetroot -cursor_name left_ptr
+
+#
+# bspc
+#
+
 bspc monitor -d I II III IV V VI VII VIII IX X
 
 # Configure borders
