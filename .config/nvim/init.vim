@@ -64,8 +64,8 @@ set shiftwidth=4
 set smarttab
 
 " Turn off automatic formatting, except for removal of comment leaders when
-" appropriate.
-set formatoptions=jqm
+" appropriate. Do this for all languages
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o formatoptions+=j formatoptions+=q
 
 " Use smartcase search by default (case-sensitive if pattern contains
 " upper-case letters, case-insensitive otherwise. Include the '\C' escape
@@ -73,6 +73,9 @@ set formatoptions=jqm
 " Note that smartcase only activates if ignorecase is already active.
 set ignorecase
 set smartcase
+
+" Expand path of the file being edited.
+set statusline+=%F
 
 "
 " Language-specific options
