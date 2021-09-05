@@ -5,6 +5,9 @@
 # sign, which may be treated as a comment by the shell, requiring escaping it
 # with a backslash.
 
+# Start polybar
+$HOME/.config/polybar/launch.sh
+
 # Start X key daemon; all keybindings go here.
 pgrep -x sxhkd > /dev/null || sxhkd &
 
@@ -19,7 +22,7 @@ else
 fi
 
 # Start cmst (ConnMan frontend)
-pgrep -x cmst > /dev/null || cmst &
+pgrep -x cmst > /dev/null || cmst -m &
 
 # Start notification daemon
 pgrep -x xfce4-notifyd > /dev/null || /usr/lib/xfce4/notifyd/xfce4-notifyd &
@@ -50,7 +53,4 @@ bspc config gapless_monocle      true
 # bspc rule -a mplayer2 state=floating
 # bspc rule -a Kupfer.py focus=on
 # bspc rule -a Screenkey manage=off
-
-# Start polybar
-$HOME/.config/polybar/launch.sh
 
