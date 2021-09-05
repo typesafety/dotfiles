@@ -18,6 +18,13 @@ alt + p
 super + Escape
 	pkill -USR1 -x sxhkd
 
+# (tdrop, kitty) Activate/toggle drop-down terminal
+alt + m
+	tdrop -A \
+		--width=80% --height=40% --x-offset=10% --y-offset=59% \
+		--auto-detect-wm \
+		kitty
+
 #
 # bspwm hotkeys
 #
