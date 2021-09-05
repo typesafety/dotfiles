@@ -12,6 +12,8 @@ Plug 'neovimhaskell/haskell-vim'
 " Colors
 Plug 'ayu-theme/ayu-vim'
 
+call plug#end()
+
 "
 " PLUGIN STOP
 "
