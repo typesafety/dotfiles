@@ -20,7 +20,7 @@ super + Escape
 
 # (tdrop, kitty) Activate/toggle drop-down terminal
 alt + m
-	tdrop --monitor-aware \
+	tdrop -A --monitor-aware \
 		--width=80% --height=40% --x-offset=10% --y-offset=59% \
 		--auto-detect-wm \
 		kitty
