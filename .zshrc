@@ -71,3 +71,7 @@ alias l="ls -Ghl"
 # Move quickly to .dotfiles
 alias cdots="cd $HOME/.dotfiles"
 
+alias sbuild="stack build -j 2 --test --bench --no-run-tests --no-run-benchmarks"
+alias fbuild="stack build --fast -j 2 --test --bench --no-run-tests --no-run-benchmarks"
+alias srun="stack run"
+alias schk='stack ghci "--ghci-options=-e 0"'
