@@ -9,8 +9,10 @@ bat
 binutils
 bison
 bspwm
+cabal-install
 connman
 devtools
+discord
 efibootmgr
 exo
 fakeroot
@@ -25,6 +27,8 @@ git
 gnome-keyring
 grub
 gtkmm3
+hoogle
+htmldoc
 htop
 hunspell-en_us
 imagemagick
@@ -51,6 +55,7 @@ pkgconf
 pkgstats
 polkit
 pulseaudio
+ranger
 rofi
 rustup
 sddm
