@@ -52,10 +52,12 @@ set colorcolumn=80
 " Show certain whitespace as characters.
 set list listchars=tab:\›\ ,trail:·,extends:>,precedes:<
 
-function TrimWhiteSpace()
+function TrimWhitespace()
   %s/\(^--\)\@<!\s*$//
   ''
 endfunction
+
+autocmd BufWritePre * call TrimWhitespace()
 
 " Tab/space insertion. By default, insert 4 spaces instead of a TAB character.
 set softtabstop=0
