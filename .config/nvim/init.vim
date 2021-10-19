@@ -11,6 +11,7 @@ Plug 'neovimhaskell/haskell-vim'
 
 " Colors
 Plug 'ayu-theme/ayu-vim'
+Plug 'hachy/eva01.vim'
 
 call plug#end()
 
@@ -24,6 +25,7 @@ call plug#end()
 
 " Make colors not look like crap
 set termguicolors
+set background=dark
 
 " ayu
 let ayucolor='dark'
@@ -82,6 +84,40 @@ set statusline+=%F
 "
 " Language-specific options
 "
+
+" Haskell
+
+" Settings for configuring the haskell-vim plugin:
+" https://github.com/neovimhaskell/haskell-vim
+
+let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
+let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`
+let g:haskell_enable_arrowsyntax = 1      " to enable highlighting of `proc`
+let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`
+let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
+let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
+let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
+
+let g:haskell_disable_TH = 0            " to disable TH highlighting
+let g:haskell_classic_highlighting = 0  " for more traditional highlighting
+let g:haskell_indent_disable = 0        " to disable haskell-vim's indenting
+
+" Indent case-expressions consistently, i.e. not dependent on the horizonatl
+" positioning of the case keyword.
+let g:haskell_indent_case_alternative = 1
+
+" Indentation sizes
+let g:haskell_indent_if = 4
+let g:haskell_indent_case = 4
+let g:haskell_indent_let = 4
+let g:haskell_indent_where = 4
+let g:haskell_indent_before_where = 4
+let g:haskell_indent_after_bare_where = 4
+let g:haskell_indent_do = 4
+let g:haskell_indent_in = 4
+let g:haskell_indent_guard = 4
+
+let g:cabal_indent_section = 2
 
 "
 " Bindings
