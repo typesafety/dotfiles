@@ -5,13 +5,21 @@ call plug#begin(stdpath('data') . '/plugged')
 
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-fugitive'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'preservim/nerdtree'
+Plug 'itchyny/lightline.vim'
 
-" Better highlighting and indentation for Haskell
-Plug 'neovimhaskell/haskell-vim'
+" Language-specific
+Plug 'pangloss/vim-javascript'
+Plug 'leafOfTree/vim-vue-plugin'
 
 " Colors
 Plug 'ayu-theme/ayu-vim'
-Plug 'hachy/eva01.vim'
+Plug 'bluz71/vim-nightfly-guicolors'
+Plug 'sainnhe/sonokai'
+
 
 call plug#end()
 
@@ -23,15 +31,25 @@ call plug#end()
 " Colors
 "
 
+" ayu
+" let ayucolor='mirage'
+
 " Make colors not look like crap
 set termguicolors
-set background=dark
 
-" ayu
-let ayucolor='dark'
+" nightfly
+let g:nightflyCursorColor = 1
+let g:nightflyItalics = 0
+let g:nightflyUnderlineMatchParen = 1
+
+" lightline
+let g:lightline = { 'colorscheme': 'nightfly' }
+
+" vim-javascript
+let g:javascript_plugin_jsdoc = 1
 
 " Set the chosen color scheme (any configuration of comes before this)
-colorscheme ayu
+colorscheme nightfly
 
 "
 " General options
@@ -41,9 +59,19 @@ colorscheme ayu
 syntax on
 filetype plugin indent on
 
-" Relative line numbers
-set number relativenumber
+" Highlight current line
+set cursorline
+
+" Width of gutter
 set numberwidth=5
+
+" Automatically set absolute numbers on unfocused buffers.
+" From https://jeffkreeftmeijer.com/vim-number/
+augroup autonumberstyle
+    autocmd!
+    autocmd BufEnter,FocusGained,WinEnter * if &nu && mode() != "i" | set rnu   | endif
+    autocmd BufLeave,FocusLost,WinLeave   * if &nu                  | set nornu | endif
+augroup END
 
 " Specify a color for the line numbers.
 highlight LineNr ctermfg=Grey guifg=Grey
@@ -59,12 +87,13 @@ function TrimWhitespace()
   ''
 endfunction
 
-autocmd BufWritePre * call TrimWhitespace()
+" Automatically trim trailing whitespace on save.
+autocmd BufWritePre * if !&binary | call TrimWhitespace() | endif
 
 " Tab/space insertion. By default, insert 4 spaces instead of a TAB character.
-set softtabstop=0
-set expandtab
-set shiftwidth=4
+set softtabstop=0  " Don't do fancy conversion from spaces -> tab
+set expandtab      " Use spaces instead of tabs
+set shiftwidth=4   " How many spaces should be inserted when pressing tab
 set smarttab
 
 " Turn off automatic formatting, except for removal of comment leaders when
@@ -78,46 +107,15 @@ autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o f
 set ignorecase
 set smartcase
 
-" Expand path of the file being edited.
-set statusline+=%F
-
 "
 " Language-specific options
 "
 
-" Haskell
+" Indent by 2 in vue
+autocmd Filetype vue setlocal shiftwidth=2
 
-" Settings for configuring the haskell-vim plugin:
-" https://github.com/neovimhaskell/haskell-vim
-
-let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
-let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`
-let g:haskell_enable_arrowsyntax = 1      " to enable highlighting of `proc`
-let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`
-let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
-let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
-let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
-
-let g:haskell_disable_TH = 0            " to disable TH highlighting
-let g:haskell_classic_highlighting = 0  " for more traditional highlighting
-let g:haskell_indent_disable = 0        " to disable haskell-vim's indenting
-
-" Indent case-expressions consistently, i.e. not dependent on the horizonatl
-" positioning of the case keyword.
-let g:haskell_indent_case_alternative = 1
-
-" Indentation sizes
-let g:haskell_indent_if = 4
-let g:haskell_indent_case = 4
-let g:haskell_indent_let = 4
-let g:haskell_indent_where = 4
-let g:haskell_indent_before_where = 4
-let g:haskell_indent_after_bare_where = 4
-let g:haskell_indent_do = 4
-let g:haskell_indent_in = 4
-let g:haskell_indent_guard = 4
-
-let g:cabal_indent_section = 2
+" Indent by 2 in HTML files
+autocmd Filetype html setlocal shiftwidth=2
 
 "
 " Bindings
@@ -127,9 +125,73 @@ let g:cabal_indent_section = 2
 nnoremap <space> <Nop>
 let mapleader = ' '
 
+" Use primary clipboard for stuff
+noremap <Leader>y "+y
+noremap <Leader>p "+p
+
+" Switching between windows
+nnoremap <A-l> <C-w>l
+nnoremap <A-h> <C-w>h
+nnoremap <A-k> <C-w>k
+nnoremap <A-j> <C-w>j
+
 " Reload this init.vim file.
-nnoremap <leader>sv :source $HOME/.config/nvim/init.vim<cr>
+" nnoremap <leader>sv :source $HOME/.config/nvim/init.vim<CR>
+
+" Remember the last used position.
+autocmd BufReadPost *
+    \ if @% !~# '\.git[\/\\]COMMIT_EDITMSG$' && line("'\"") > 1 && line("'\"") <= line("$") |
+    \     exe "normal! g`\"" |
+    \ endif
 
 " Bind Escape to clear current highlighting
 nnoremap <silent> <esc> :noh<CR>
+
+" Toggle between relative and absolute number lines
+" `number` is always set, the function then toggles between 'hybrid' and
+" absolute line numbers
+set number relativenumber
+function! ToggleNumberStyle()
+    if (&relativenumber == 0)
+        set relativenumber
+    else
+        set norelativenumber
+    endif
+endfunction
+nnoremap <C-l> :call ToggleNumberStyle()<CR>
+
+"
+" Plugin-dependent
+"
+
+let g:vim_vue_plugin_config = {
+      \'syntax': {
+      \   'template': ['html'],
+      \   'script': ['javascript'],
+      \   'style': ['css'],
+      \},
+      \'full_syntax': [],
+      \'initial_indent': [],
+      \'attribute': 0,
+      \'keyword': 0,
+      \'foldexpr': 0,
+      \'debug': 0,
+      \}
+
+" Set lightline configuration
+let g:lightline = {
+      \ 'colorscheme': 'powerline',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'readonly', 'absolutepath', 'modified'] ]
+      \ },
+      \ }
+" lightline covers this (don't show duplicate -- INSERT -- text)
+set noshowmode
+
+" Toggle NERDTree panel
+nnoremap <C-n> :NERDTreeToggle<CR>
+
+" Run fzf
+nnoremap <C-p> :FZF<CR>
 
