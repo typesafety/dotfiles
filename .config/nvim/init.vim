@@ -13,9 +13,10 @@ Plug 'preservim/nerdtree'
 Plug 'itchyny/lightline.vim'
 
 " Language-specific
-Plug 'pangloss/vim-javascript'
-Plug 'leafOfTree/vim-vue-plugin'
-Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins' }
+
+" See https://github.com/numirias/semshi for install instructions:
+" $ pip3 install pynvim --upgrade
+Plug 'numirias/semshi', { 'do': { -> ':UpdateRemotePlugins' } }
 
 " Colors
 Plug 'EdenEast/nightfox.nvim'
@@ -49,14 +50,10 @@ let g:semshi#simplify_markup = v:false
 let g:semshi#error_sign_delay = 2
 let g:semshi#update_delay_factor = 0.0001
 
-" vim-javascript
-let g:javascript_plugin_jsdoc = 1
-
-
 " Set the chosen color scheme (any configuration of comes before this).
 " Use a simpler color scheme with termguicolors OFF if using without a GUI
 " (over putty for example).
-colorscheme duskfox
+colorscheme nightfox
 
 "
 " General options
@@ -188,20 +185,6 @@ nnoremap <silent> <C-l> :call ToggleNumberStyle()<CR>
 
 " neoterm
 let g:neoterm_default_mod = 'botright'
-
-let g:vim_vue_plugin_config = {
-      \'syntax': {
-      \   'template': ['html'],
-      \   'script': ['javascript'],
-      \   'style': ['css'],
-      \},
-      \'full_syntax': [],
-      \'initial_indent': [],
-      \'attribute': 0,
-      \'keyword': 0,
-      \'foldexpr': 0,
-      \'debug': 0,
-      \}
 
 " Set lightline configuration
 let g:lightline = {

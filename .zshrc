@@ -59,6 +59,8 @@ export PATH="$PATH:$HOME/.local/bin"
 export PATH=$HOME/.dotfiles/scripts:$PATH
 export EDITOR=/usr/bin/nvim
 
+alias python=python3
+
 # Make rm/cp/mv a bit safer
 alias rm="rm -I"
 alias cp="cp -i"
